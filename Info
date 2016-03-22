@@ -1,0 +1,9 @@
+- Di default bisogna arrivare a 21 punti per vincere, poi volendo si puo' editare
+- Attributo di ordinaMano(): boolean che significa 0 per seme e 1 per valore
+- Giocatore giocatore di Squadra e' un array di 2 elementi
+
+GLOSSARIO:
+Partita: tutta la partita
+Mano: da quando vengono distribuite le carte a quando nessun giocatore ha piu' carte 
+Giro: da quando si riparte dal primo giocatore che ha mosso
+Giocata: quando un giocatore fa la sua mossa
