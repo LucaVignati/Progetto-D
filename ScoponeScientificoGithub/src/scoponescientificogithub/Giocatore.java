@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scoponescientifico;
+package scoponescientificogithub;
 
 import java.util.ArrayList;
 
@@ -29,12 +29,12 @@ public class Giocatore {
         return nome;
     }
     
-    public void rimuoviCartaDallaMano(Carta cartaDaRimuovere) {
-        carteInMano.remove(cartaDaRimuovere);
-    }
-    
     public ArrayList<Carta> getCarteInMano() {
         return carteInMano;
+    }
+    
+    public void aggiungiCartaInMano(Carta carta) {
+        carteInMano.add(carta);
     }
     
     public Carta gioca()    {

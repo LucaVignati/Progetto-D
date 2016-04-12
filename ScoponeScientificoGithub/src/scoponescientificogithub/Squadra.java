@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scoponescientifico;
+package scoponescientificogithub;
 
 import java.util.ArrayList;
 
@@ -39,5 +39,9 @@ public class Squadra {
     
     public ArrayList<Carta> getCartePrese() {
         return cartePrese;
+    }
+    
+    public void aggiungiCartaPresa(Carta carta) {
+        cartePrese.add(carta);
     }
 }
