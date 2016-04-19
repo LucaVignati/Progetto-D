@@ -5,6 +5,7 @@
  */
 package scoponescientificogithub;
 
+import java.util.Random;
 import java.util.ArrayList;
 
 /**
@@ -56,41 +57,52 @@ public class GestorePartita {
     
     public void giocata(int j) {
         Carta cartaGiocata = giocatori[j].gioca();
-        ArrayList<Carta> cartePrendibili = new ArrayList<>();
+        Carta cartaPrendibile = null;
+        ArrayList<int[]> combinazioni = new ArrayList<>(); 
         
         for (Carta cartaTav : carteTavolo) {
             if (cartaTav.getValore() == cartaGiocata.getValore()) {
-                cartePrendibili.add(cartaTav);
+                cartaPrendibile = cartaTav;
             }
         }
-            
-        switch (cartePrendibili.size()) {
-            case 0:
-                carteTavolo.add(cartaGiocata);
-                break;
-            case 1:
-                carteTavolo.remove(cartePrendibili.get(0));
-                
-                /* per ora brutale, poi col login sistemiamo */
-                if (j == 0 || j == 2) {
-                    squadra[0].aggiungiCartaPresa(cartaGiocata);
-                    squadra[0].aggiungiCartaPresa(cartePrendibili.get(0));
-                } else {
-                    squadra[1].aggiungiCartaPresa(cartaGiocata);
-                    squadra[1].aggiungiCartaPresa(cartePrendibili.get(0));
-                }
-                
-                break;
-            default:
-                //il giocatore sceglie cosa fare. Se ci sono più carte prendibili o se ci sono combinazioni, ecc. ecc.
-                break;
-        }
         
+        if (cartaPrendibile != null) {
+            carteTavolo.remove(cartaPrendibile);
+                
+            // per ora brutale, poi col login sistemiamo 
+            if (j == 0 || j == 2) {
+                squadra[0].aggiungiCartaPresa(cartaGiocata);
+                squadra[0].aggiungiCartaPresa(cartaPrendibile);
+            } else {
+                squadra[1].aggiungiCartaPresa(cartaGiocata);
+                squadra[1].aggiungiCartaPresa(cartaPrendibile);
+            }
+        } else {
+            int numeroCombinazioniPossibiliSulTavolo = 0;
+            ArrayList<Carta> combinazioniPrendibili = new ArrayList<>(); // come cartaPrendibile solo che contiene le combinazioni effettivamente prendibili che sono anche presenti sul tavolo 
+            combinazioni = cartaGiocata.getCombinazioni();
+            
+            for (int i = 0; i < combinazioni.size(); i++) {
+                int[] combinazioneCorrente = combinazioni.get(i);
+                
+                for (j = 0; j < combinazioneCorrente.length; j++) {
+                    // scansione del tavolo per vedere se e' presente la combinazione corrente 
+                    for (Carta cartaTav : carteTavolo) {
+                        if (cartaTav.getValore() == combinazioneCorrente[j]) {
+                            //controlla la successiva... pero' dipende dalla dimensione dell'int[] combinazionecorrente
+                        }
+                    }
+                }
+            } 
+        }
     }
             
-    public void distribuisciCarte() { /* le carte qui sono numerate da 1 a 40. 1-10 coppe, 11-20 denari, 21-30 bastoni, 31-40 spade */
-        /* poi fare il random, ora semplice algoritmo di base da utilizzare per creare lo scheletro del programma */
+    public void distribuisciCarte() { /* le carte qui sono numerate da 1 a 40. 1-10 coppe, 11-20 denari, 21-30 bastoni, 31-40 spade */  
+        /* creo mazzo */
+        ArrayList<Carta> mazzo;
+        mazzo = new ArrayList<>();
         
+        /* crea le carte */
         for (int i = 1; i <= 40; i++) {
             Carta carta;
             
@@ -104,8 +116,33 @@ public class GestorePartita {
                 carta = new Carta(4, i - 30);
             }
             
-            giocatori[3 - (i % 4)].aggiungiCartaInMano(carta); //molto basic
+            
+            mazzo.add(carta);
         }
+            
+        int c = 40;
+        
+        /* passo in rassegna i 4 giocatori uno alla volta e assegno una carta random dal mazzo, che poi rimuovo */
+        for (int i = 1; i <= 10; i++) {
+            for (int j = 0; j < 4; j++) {
+                Random random = new Random();
+                int numeroRandom = random.nextInt(c);
+                
+                giocatori[j].aggiungiCartaInMano(mazzo.get(numeroRandom));
+                mazzo.remove(numeroRandom);
+                c--;
+            }
+        }
+        
+//        /* test per vedere le carte */
+//        for (int i = 0; i < 4; i++) {
+//            ArrayList<Carta> carteTest = giocatori[i].getCarteInMano();
+//            
+//            System.out.println("Carte del giocatore " + i + ":");
+//            for (int j = 0; j < 10; j++) {
+//                System.out.println(carteTest.get(j));
+//            } System.out.println("");
+//        }
     }
     
     public void contaPunti() {
