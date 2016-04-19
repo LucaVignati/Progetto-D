@@ -5,6 +5,8 @@
  */
 package scoponescientificogithub;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author cl417221
@@ -29,5 +31,45 @@ public class Carta {
     
     public boolean getScopa() {
         return scopa;
+    }
+    
+    public ArrayList<int[]> getCombinazioni(int valoreCarta)   {
+        ArrayList<int[]> combinazioni = new ArrayList<>();
+        int[] combinazione;
+        int[] carte = new int[4];
+        carte[0] = 1;
+        carte[1] = 2;
+        carte[2] = 3;
+        carte[3] = 4;
+        int somma, i, imax = 3;
+        for(somma = 0 ; imax > 0 ; somma = 0)  {
+            for(i = 0; i <= imax; i++)  {
+                somma += carte[i];
+            }
+            if(somma > valoreCarta) {
+                imax --;
+            }   else if(somma == valoreCarta)   {
+                combinazione = new int[imax + 1];
+                for(i = 0; i <= imax; i++)   {
+                    combinazione[i] = carte[i];
+                }
+                combinazioni.add(combinazione);
+                for(i = 0; i < imax; i++)   {
+                    if((carte[imax - i] - 1) != carte[imax - i - 1])  {
+                        carte[imax - i - 1]++;
+                        for(int j = 0; j < (i + 1); j++)   {
+                            carte[imax - i + j] = carte[imax - i - 1 + j] + 1;
+                        }
+                        break;
+                    }
+                }
+                if(i == imax)    {
+                    imax --;
+                }
+            }   else    {
+                carte[imax]++;
+            }
+        }
+        return combinazioni;
     }
 }
