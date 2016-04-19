@@ -33,7 +33,7 @@ public class Carta {
         return scopa;
     }
     
-    public ArrayList<int[]> getCombinazioni(int valoreCarta)   {
+    public ArrayList<int[]> getCombinazioni()   {
         ArrayList<int[]> combinazioni = new ArrayList<>();
         int[] combinazione;
         int[] carte = new int[4];
@@ -46,9 +46,9 @@ public class Carta {
             for(i = 0; i <= imax; i++)  {
                 somma += carte[i];
             }
-            if(somma > valoreCarta) {
+            if(somma > valore) {
                 imax --;
-            }   else if(somma == valoreCarta)   {
+            }   else if(somma == valore)   {
                 combinazione = new int[imax + 1];
                 for(i = 0; i <= imax; i++)   {
                     combinazione[i] = carte[i];
