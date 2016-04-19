@@ -72,4 +72,20 @@ public class Carta {
         }
         return combinazioni;
     }
+    
+    @Override
+    public String toString() {
+        switch (seme) {
+            case 1:
+                return valore + " di coppe";
+            case 2:
+                return valore + " di denari";
+            case 3:
+                return valore + " di bastoni";
+            case 4:
+                return valore + " di spade";
+        }
+        
+        return "";
+    }
 }
