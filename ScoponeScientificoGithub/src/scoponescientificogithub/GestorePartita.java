@@ -46,6 +46,51 @@ public class GestorePartita {
     public void Mano() {
         distribuisciCarte();
         
+        /* test per il conta punti
+        
+        ArrayList<Carta> cim = giocatori[0].getCarteInMano();
+        for (int i = 0; i < 10; i++) {
+            squadra[0].aggiungiCartaPresa(cim.get(i));
+        }
+        
+        cim = giocatori[1].getCarteInMano();
+        for (int i = 0; i < 10; i++) {
+            squadra[0].aggiungiCartaPresa(cim.get(i));
+        }
+        
+        cim = giocatori[2].getCarteInMano();
+        for (int i = 0; i < 10; i++) {
+            squadra[1].aggiungiCartaPresa(cim.get(i));
+        }
+        
+        cim = giocatori[3].getCarteInMano();
+        for (int i = 0; i < 10; i++) {
+            squadra[1].aggiungiCartaPresa(cim.get(i));
+        }
+        
+        ArrayList<Carta> cp = squadra[0].getCartePrese();
+        System.out.println("Carte squadra 1:");
+        for (int i = 0; i < 20; i++) {
+            System.out.println(cp.get(i));
+        }
+        
+        cp = squadra[1].getCartePrese();
+        System.out.println("\nCarte squadra 2:");
+        for (int i = 0; i < 20; i++) {
+            System.out.println(cp.get(i));
+        }
+        
+        contaPunti();
+        System.out.print("\n");
+        System.out.println(squadra[0].getPunteggioPartita());
+        System.out.println(squadra[1].getPunteggioPartita());
+        
+        
+        */
+        
+        
+        
+        
         for (int i = 0; i < 10; i++) {
             for(int j = 0; j < 4; j++)
                 giocata(j);
@@ -85,10 +130,10 @@ public class GestorePartita {
             for (int i = 0; i < combinazioni.size(); i++) {
                 int[] combinazioneCorrente = combinazioni.get(i);
                 
-                for (j = 0; j < combinazioneCorrente.length; j++) {
-                    // scansione del tavolo per vedere se e' presente la combinazione corrente 
+                for (int k = 0; k < combinazioneCorrente.length; k++) {
+                    // scansione del tavolo per vedere se e' presente la combinazione corrente
                     for (Carta cartaTav : carteTavolo) {
-                        if (cartaTav.getValore() == combinazioneCorrente[j]) {
+                        if (cartaTav.getValore() == combinazioneCorrente[k]) {
                             //controlla la successiva... pero' dipende dalla dimensione dell'int[] combinazionecorrente
                         }
                     }
@@ -146,7 +191,161 @@ public class GestorePartita {
     }
     
     public void contaPunti() {
+        //creo le variabili per ogni squadra
+        int[] p = {0, 0}, pC = {0, 0}, pD = {0, 0}, pS = {0, 0}, pB = {0, 0}, d = {0, 0}, c = {0, 0}, s = {0, 0}, sB = {0, 0}, tot = {0, 0};
+        //ciclo le due squadre
+        for (int i = 0; i < 2; i++){
+            
+            int seme, val;
+            s[i]=squadra[i].countScopa;
+            //ciclo le carte per la squadra i
+            for (Carta cartaCorrente : squadra[i].cartePrese) {
+                seme = cartaCorrente.getSeme();
+                val = cartaCorrente.getValore();
+                //incremento il contatore carte
+                c[i]++;
+                //controllo il seme, e il vbalore piu alto della primiera
+                if(seme==1){
+                    if(val==7){
+                        pC[i]=21;
+                    }
+                    if(val==6 && pC[i]<18){
+                        pC[i]=18;
+                    }
+                    if(val==1 && pC[i]<16){
+                        pC[i]=16;
+                    }
+                    if(val==5 && pC[i]<15){
+                        pC[i]=15;
+                    }
+                    if(val==4 && pC[i]<14){
+                        pC[i]=14;
+                    }
+                    if(val==3 && pC[i]<13){
+                        pC[i]=13;
+                    }
+                    if(val==2 && pC[i]<12){
+                        pC[i]=12;
+                    }
+                    if(val==8 || val==9 || val==10 && pC[i]<10){
+                        pC[i]=10;
+                    }
+                }
+                if(seme==2){
+                    d[i]++;
+                    if(val==7){
+                        pD[i]=21;
+                        sB[i]=1;
+                    }
+                    if(val==6 && pD[i]<18){
+                        pD[i]=18;
+                    }
+                    if(val==1 && pD[i]<16){
+                        pD[i]=16;
+                    }
+                    if(val==5 && pD[i]<15){
+                        pD[i]=15;
+                    }
+                    if(val==4 && pD[i]<14){
+                        pD[i]=14;
+                    }
+                    if(val==3 && pD[i]<13){
+                        pD[i]=13;
+                    }
+                    if(val==2 && pD[i]<12){
+                        pD[i]=12;
+                    }
+                    if(val==8 || val==9 || val==10 && pD[i]<10){
+                        pD[i]=10;
+                    }
+                }
+                if(seme==3){
+                    if(val==7){
+                        pS[i]=21;
+                    }
+                    if(val==6 && pS[i]<18){
+                        pS[i]=18;
+                    }
+                    if(val==1 && pS[i]<16){
+                        pS[i]=16;
+                    }
+                    if(val==5 && pS[i]<15){
+                        pS[i]=15;
+                    }
+                    if(val==4 && pS[i]<14){
+                        pS[i]=14;
+                    }
+                    if(val==3 && pS[i]<13){
+                        pS[i]=13;
+                    }
+                    if(val==2 && pS[i]<12){
+                        pS[i]=12;
+                    }
+                    if(val==8 || val==9 || val==10 && pS[i]<10){
+                        pS[i]=10;
+                    }
+                }
+                if(seme==4){
+                    if(val==7){
+                        pB[i]=21;
+                    }
+                    if(val==6 && pB[i]<18){
+                        pB[i]=18;
+                    }
+                    if(val==1 && pB[i]<16){
+                        pB[i]=16;
+                    }
+                    if(val==5 && pB[i]<15){
+                        pB[i]=15;
+                    }
+                    if(val==4 && pB[i]<14){
+                        pB[i]=14;
+                    }
+                    if(val==3 && pB[i]<13){
+                        pB[i]=13;
+                    }
+                    if(val==2 && pB[i]<12){
+                        pB[i]=12;
+                    }
+                    if(val==8 || val==9 || val==10 && pB[i]<10){
+                        pB[i]=10;
+                    }
+                }
+            }//dopo aver ciclato tutte le carte della squadra i
+            p[i]=pC[i]+pD[i]+pS[i]+pB[i];
+            
+        }//dopo aver ciclato entrambi i giocatori
         
+        //controllo chi ha fatto la primiera
+        if(p[0]>p[1]) {
+            tot[0]++;
+        } else if(p[1]>p[0]) {
+            tot[1]++;
+        }
+        //controllo chi ha fatto le carte
+        if(c[0]>c[1]) {
+            tot[0]++;
+        } else if(c[1]>c[0]) {
+            tot[1]++;
+        }
+        //controllo chi ha fatto i denari
+        if(d[0]>d[1]) {
+            tot[0]++;
+        } else if(d[1]>d[0]) {
+            tot[1]++;
+        }
+        tot[0]=tot[0]+sB[0]+s[0];
+        tot[1]=tot[1]+sB[1]+s[1];
+        squadra[0].setPunteggioPartita(tot[0]);
+        squadra[1].setPunteggioPartita(tot[1]);
+        
+        /* 
+        System.out.println("Denari 1 = "+d[0]+" 2 = "+d[1]);
+        System.out.println("Carte 1 = "+c[0]+" 2 = "+c[1]);
+        System.out.println("Primiera 1 = "+p[0]+" 2 = "+p[1]);
+        System.out.println("Settebello 1 = "+sB[0]+" 2 = "+sB[1]);
+        System.out.println("tot 1 = "+tot[0]+" 2 = "+tot[1]);
+        */
     }
     
     /*
