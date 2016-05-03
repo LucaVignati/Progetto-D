@@ -16,7 +16,7 @@ public class ScoponeScientificoGithub {
      */
     public static void main(String[] args) {
         GestorePartita gp = new GestorePartita();
-        gp.Partita();
+        gp.Mano();
     }
     
 }

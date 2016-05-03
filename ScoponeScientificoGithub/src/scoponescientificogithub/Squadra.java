@@ -16,9 +16,11 @@ public class Squadra {
     Giocatore[] giocatore;
     int punteggioPartita;
     ArrayList<Carta> cartePrese;
+    int countScopa;
     
     public Squadra(String id, Giocatore giocatore1, Giocatore giocatore2) {
         this.id = id;
+        countScopa = 0;
         giocatore = new Giocatore[2];
         giocatore[0] = giocatore1;
         giocatore[1] = giocatore2;
