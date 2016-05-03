@@ -78,22 +78,53 @@ public class GestorePartita {
                 squadra[1].aggiungiCartaPresa(cartaPrendibile);
             }
         } else {
-            int numeroCombinazioniPossibiliSulTavolo = 0;
-            ArrayList<Carta> combinazioniPrendibili = new ArrayList<>(); // come cartaPrendibile solo che contiene le combinazioni effettivamente prendibili che sono anche presenti sul tavolo 
+            ArrayList<int[]> combinazioniPrendibili = new ArrayList<>(); // come cartaPrendibile solo che contiene le combinazioni effettivamente prendibili che sono anche presenti sul tavolo 
+            ArrayList<Carta> combinazione1 = null;
             combinazioni = cartaGiocata.getCombinazioni();
             
             for (int i = 0; i < combinazioni.size(); i++) {
                 int[] combinazioneCorrente = combinazioni.get(i);
+                int presentiNellaCombinazione = 0;
                 
-                for (j = 0; j < combinazioneCorrente.length; j++) {
+                for (int k = 0; k < combinazioneCorrente.length; k++) {
                     // scansione del tavolo per vedere se e' presente la combinazione corrente 
+                    if(combinazioneCorrente.length - k < carteTavolo.size() - presentiNellaCombinazione)    {
+                                break;
+                            }
+                    combinazione1 = new ArrayList<>();
                     for (Carta cartaTav : carteTavolo) {
-                        if (cartaTav.getValore() == combinazioneCorrente[j]) {
+                        if (cartaTav.getValore() == combinazioneCorrente[k]) {
+                            presentiNellaCombinazione++;
+                            combinazione1.add(cartaTav);
                             //controlla la successiva... pero' dipende dalla dimensione dell'int[] combinazionecorrente
                         }
                     }
                 }
+                
+                if (presentiNellaCombinazione == combinazioneCorrente.length)    {
+                    combinazioniPrendibili.add(combinazioneCorrente);
+                }
             } 
+            switch (combinazioniPrendibili.size())  {
+                case 0:
+                    carteTavolo.add(cartaGiocata);
+                    break;
+                case 1:
+                    for(Carta cartaCombinazione : combinazione1)    {
+                        carteTavolo.remove(cartaCombinazione);
+                        if (j == 0 || j == 2) {
+                            squadra[0].aggiungiCartaPresa(cartaGiocata);
+                            squadra[0].aggiungiCartaPresa(cartaCombinazione);
+                        } else {
+                            squadra[1].aggiungiCartaPresa(cartaGiocata);
+                            squadra[1].aggiungiCartaPresa(cartaCombinazione);
+                        }
+                    }
+                    break;
+                default:
+                    // il giocatore sceglie una combinazione di carte
+                    break;
+            }
         }
     }
             
