@@ -5,20 +5,33 @@
  */
 package scoponescientificogithub;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 
 /**
  *
  * @author cl417221
  */
 public class Carta {
-    int seme, valore; /* 1 coppe, 2 denari, 3 basoni, 4 spade */
+    int seme, valore; /* 1 coppe, 2 denari, 3 bastoni, 4 spade */
     boolean scopa;
+    BufferedImage image;
     
     public Carta(int seme, int valore) {
         scopa = false;
         this.seme = seme;
         this.valore = valore;
+        
+        image = null;
+       
+        try {
+            image = ImageIO.read(new File(getFileName()));
+        } catch (IOException e) {
+            System.err.println("Immagine non trovata");
+        }
     }
     
     public int getSeme() {
@@ -31,6 +44,10 @@ public class Carta {
     
     public boolean getScopa() {
         return scopa;
+    }
+    
+    public BufferedImage getImage() {
+        return image;
     }
     
     public ArrayList<int[]> getCombinazioni()   {
@@ -71,6 +88,23 @@ public class Carta {
             }
         }
         return combinazioni;
+    }
+    
+    private String getFileName() {
+        String s = "";
+        
+        switch (seme) {
+            case 1:
+                s += valore;
+            case 2:
+                s += valore + 10;
+            case 3:
+                s += valore + 20;
+            case 4:
+                s += valore + 30;
+        }
+        
+        return s + ".jpg";
     }
     
     @Override
